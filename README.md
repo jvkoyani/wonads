@@ -110,6 +110,17 @@ Every `<section>` has an `aria-label` (usually its heading text) and a descripti
 
 ## Publishing to Hostinger
 
+### Automatic (recommended): push to GitHub
+Every push to the `main` branch builds the site on GitHub and uploads only the changed files to Hostinger (`.github/workflows/deploy.yml`). It's live about 1–2 minutes later.
+
+```
+git add -A
+git commit -m "Update Local SEO price"
+git push
+```
+Follow progress on GitHub in the **Actions** tab: a green tick means it's live, a red cross means it failed (click it to see why; the live site stays as it was). This needs the FTP secrets set up once (see the comments at the top of `deploy.yml`). Purge the cache in hPanel if you don't see a change.
+
+### Manual
 1. Double-click **build.bat**.
 2. Optional: double-click **preview.bat** and check the site.
 3. In Hostinger **hPanel → Websites → File Manager → public_html**, upload **everything inside** the `dist` folder (not the folder itself) and overwrite when asked. FileZilla over FTP works too.
