@@ -1,0 +1,23 @@
+---
+// Renders a page body from src/content/pages/<name>.html.
+// Markers in the HTML are swapped for shared components, so they're edited in one place:
+//   <!-- @SiteFooter -->  <!-- @SiteFooter brand -->  <!-- @EditorialHeader -->  <!-- @ServiceHeader #cta -->
+import SiteFooter from './SiteFooter.astro';
+import EditorialHeader from './EditorialHeader.astro';
+import ServiceHeader from './ServiceHeader.astro';
+
+const { html } = Astro.props;
+const parts = html.split(/<!-- @(\w+)(?: ([^ <>]+))? -->/);
+const pieces = [];
+for (let i = 0; i < parts.length; i += 3) {
+  pieces.push({ html: parts[i] });
+  if (i + 1 < parts.length) pieces.push({ component: parts[i + 1], arg: parts[i + 2] || '' });
+}
+---
+{pieces.map(p =>
+  p.html !== undefined ? <Fragment set:html={p.html} />
+  : p.component === 'SiteFooter' ? <SiteFooter brand={p.arg === 'brand'} />
+  : p.component === 'EditorialHeader' ? <EditorialHeader />
+  : p.component === 'ServiceHeader' ? <ServiceHeader cta={p.arg} />
+  : <Fragment set:html={`<!-- unknown component ${p.component} -->`} />
+)}

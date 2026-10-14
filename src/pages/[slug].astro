@@ -1,0 +1,155 @@
+---
+// Builds every page except the home page:
+//   service-<category>-<item>  from src/content/services/<category>/<item>.md + src/data/services-data.js
+//   guide-<name>               from src/content/guides/<name>.md
+//   everything else            from src/content/pages/<name>.json + .html
+import Base from '../layouts/Base.astro';
+import RawBody from '../components/RawBody.astro';
+import ServiceHeader from '../components/ServiceHeader.astro';
+import EditorialHeader from '../components/EditorialHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { getServices, getGuides, getPages, markdown, syncPrices } from '../lib/content.mjs';
+import { SITE, business, cities, pageNodes } from '../data/site.mjs';
+
+export function getStaticPaths() {
+  return [
+    ...getServices().map(service => ({ params: { slug: service.slug }, props: { kind: 'service', service } })),
+    ...getGuides().map(guide => ({ params: { slug: guide.slug }, props: { kind: 'guide', guide } })),
+    ...getPages().filter(p => p.slug !== 'index').map(page => ({ params: { slug: page.slug }, props: { kind: 'page', page } })),
+  ];
+}
+
+const { kind, service, guide, page } = Astro.props;
+const enc = encodeURIComponent;
+
+const pageHtml = kind === 'page' ? syncPrices(page.html, page.slug) : '';
+
+let s, g;
+if (kind === 'service') {
+  const { category, name, price, data, slug } = service;
+  const url = SITE + slug;
+  s = {
+    ...service, d: data,
+    request: `contact?type=vip&service=${enc(category.title)}&plan=${enc(name)}#vip-form`,
+    related: category.items.filter(item => item[0] !== name).slice(0, 3)
+      .map(([n, p]) => ({ name: n, price: p, href: `service-${category.id}-${n.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}` })),
+    extra: service.body ? markdown(service.body) : '',
+    nodes: [
+      ...pageNodes({
+        path: slug, title: data.title, description: data.description,
+        crumbs: [['Services', 'services'], [category.title, category.id], [name, slug]],
+        mainEntity: { '@id': url + '#service' },
+      }),
+      {
+        '@type': 'Service', '@id': url + '#service', name, description: data.serviceDescription || data.description, url,
+        provider: { '@id': SITE + '#organization' }, serviceType: category.title, areaServed: cities(),
+        mainEntityOfPage: { '@id': url + '#webpage' },
+      },
+    ],
+  };
+}
+if (kind === 'guide') {
+  const { data, slug } = guide;
+  const url = SITE + slug;
+  const [y, m, d] = data.updated.split('-').map(Number);
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  // Markdown sections (## headings) become <section> blocks; tables get the scrollable wrapper.
+  const article = data.html ? guide.body : markdown(guide.body)
+    .split(/(?=<h2>)/).filter(x => x.trim()).map(x => {
+      // each "## Heading" section gets aria-label + a class/id named after the guide and heading
+      const heading = (x.match(/<h2>([\s\S]*?)<\/h2>/) || [, ''])[1].replace(/<[^>]+>/g, '').trim();
+      const name = `${slug.slice('guide-'.length)}-${heading.toLowerCase().replace(/&amp;|&/g, 'and').replace(/&[a-z0-9#]+;/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').split('-').slice(0, 6).join('-')}`;
+      return heading ? `<section aria-label="${heading}" class="${name}" id="${name}">${x}</section>` : `<section>${x}</section>`;
+    }).join('')
+    .replace(/<table>([\s\S]*?)<\/table>/g, (all, inner) => {
+      const heads = [...inner.matchAll(/<th>([\s\S]*?)<\/th>/g)].map(h => h[1].replace(/<[^>]+>/g, ''));
+      return `<div class="seo-table-wrap" tabindex="0" role="region" aria-label="${heads.join(' and ')}"><table>${inner.replace(/<th>/g, '<th scope="col">')}</table></div>`;
+    });
+  g = {
+    ...guide, d: data, article, updatedText: `${d} ${months[m - 1]} ${y}`,
+    nodes: [
+      ...pageNodes({
+        path: slug, title: data.title, description: data.description,
+        crumbs: [['Guides', 'resources'], [data.heading, slug]], mainEntity: { '@id': url + '#article' },
+      }),
+      {
+        '@type': 'Article', '@id': url + '#article', headline: data.heading, description: data.description,
+        mainEntityOfPage: { '@id': url + '#webpage' }, author: { '@id': SITE + '#organization' },
+        publisher: { '@id': SITE + '#organization' }, inLanguage: 'en-IN', url,
+        dateModified: data.updated, image: SITE + business.logo,
+      },
+    ],
+  };
+}
+---
+{kind === 'service' && (
+<Base title={s.d.title} description={s.d.description} path={s.slug} preset="service" nodes={s.nodes}
+      bodyAttrs={{ class: 'category-shell', 'data-category': s.category.id, 'data-item': s.item }}>
+<a class="skip-content" href="#itemRoot">Skip to content</a><div class="cursor" aria-hidden="true"></div><div class="noise" aria-hidden="true"></div>
+<ServiceHeader />
+<main id="itemRoot" data-prerendered="true">
+  <nav class="seo-visible-breadcrumb" aria-label="Breadcrumb"><a href="https://wonads.com/">Home</a> / <a href="https://wonads.com/services">Services</a> / <a href={`https://wonads.com/${s.category.id}`}>{s.category.title}</a> / <span aria-current="page">{s.name}</span></nav>
+  <section class={`category-hero item-hero ${s.item}-hero`} id={`${s.item}-hero`} aria-label={`${s.name} built for results.`}>
+    <p class="category-crumb"><a href="services">Services</a> &nbsp;/&nbsp; <a href={s.category.id}>{s.category.title}</a> &nbsp;/&nbsp; {s.name}</p>
+    <h1>{s.name}<span>built for results.</span></h1>
+    <div class="category-hero-foot"><p>{s.d.intro}</p></div>
+  </section>
+  <section class={`item-overview ${s.item}-overview`} id={`${s.item}-overview`} aria-label="Focused expertise. No unnecessary extras.">
+    <aside><div class="item-price-box"><small>STARTING PRICE</small><strong>{s.price}</strong><p>Final scope depends on volume, complexity and timeline. You receive a clear proposal before work begins.</p><a href={s.request}>Request this service <b>↗</b></a></div></aside>
+    <div class="item-content">
+      <span class="eyebrow">{s.category.number} / {s.category.title}</span>
+      <h2>Focused expertise.<br />No unnecessary extras.</h2>
+      <p>We approach {s.name.toLowerCase()} as a business tool—not a disconnected deliverable. Every decision is tied to positioning, audience behaviour and a measurable next step.</p>
+      <div class="included-list"><article><span>01</span><div class="included-list__heading"><h3>Discovery &amp; diagnosis</h3><p>Business context, audience, competitors, current performance and success criteria.</p></div></article><article><span>02</span><div class="included-list__heading"><h3>Specialist strategy</h3><p>A clear plan covering scope, priorities, channel logic and measurable outcomes.</p></div></article><article><span>03</span><div class="included-list__heading"><h3>Execution &amp; quality control</h3><p>Hands-on delivery with senior review, brand consistency and technical checks.</p></div></article><article><span>04</span><div class="included-list__heading"><h3>Handover &amp; next actions</h3><p>Final assets, implementation guidance, performance context and recommended next steps.</p></div></article></div>
+      <section class={`seo-answers ${s.item}-scope`} id={`${s.item}-scope`} aria-label={`${s.name} scope and answers`}>
+        <h2>What does {s.name} include?</h2>
+        <p>{s.d.answer || s.d.intro}</p>
+        <h3>Scope to discuss in your brief</h3>
+        <ul>{s.d.includes.map(x => <li>{x}</li>)}</ul>
+        <h3>How much does {s.name} cost?</h3>
+        <p>The listed starting estimate is {s.price}. Final pricing depends on the agreed scope, volume and timeline. {s.category.billing}.</p>
+        <h3>What should you share before we start?</h3>
+        <p>Share your business goal, relevant website or account links, current challenges and preferred timeline. We confirm deliverables and required access before work begins.</p>
+        <h3>Can this be part of a larger project?</h3>
+        <p>Yes. Explore our <a href={s.category.id}>{s.category.title} packages</a> to compare related services, or <a href={s.request}>request a proposal for {s.name}</a>.</p>
+      </section>
+      <div class="deliverable-section"><span class="eyebrow">Related {s.category.title} services</span><div class="related-grid">{s.related.map(r => <a href={r.href}><strong>{r.name}</strong><span>{r.price} &nbsp; ↗</span></a>)}</div></div>
+    </div>
+  </section>
+  <section class={`category-process ${s.item}-process`} id={`${s.item}-process`} aria-label="Brief. Build. Better."><span class="eyebrow">A simple working rhythm</span><h2>Brief. Build.<br />Better.</h2><div class={`${s.item}-process__items`}><article><span>01</span><h3>Brief</h3><p>We align on the challenge, scope and exact outcome.</p></article><article><span>02</span><h3>Build</h3><p>Our specialist executes with transparent progress updates.</p></article><article><span>03</span><h3>Review</h3><p>You review the work against the agreed objective.</p></article><article><span>04</span><h3>Improve</h3><p>Feedback and performance sharpen the final result.</p></article></div></section>
+  <section class={`category-cta ${s.item}-contact-cta`} id="item-contact" aria-label="Let’s make it work harder."><span class="eyebrow">Start with one service</span><h2>Let’s make it<br /><span>work harder.</span></h2><a href={s.request}>Discuss {s.name} <b>↗</b></a></section>
+  {s.extra && (s.d.extraHtml ? <Fragment set:html={s.body} /> : (
+    <section class={`seo-answers seo-commercial ${s.item}-details`} id={`${s.item}-details`} aria-label={s.d.extraTitle}><p class="eyebrow">{s.d.extraEyebrow}</p><h2>{s.d.extraTitle}</h2><Fragment set:html={s.extra} /><a class="seo-button" href={`contact?service=${enc(s.d.extraTitle)}#quick-form`}>Discuss this service <span aria-hidden="true">↗</span></a></section>
+  ))}
+</main>
+<script is:inline src="services-data.js?v=20260908-seo1" defer></script><script is:inline src="service-detail-page.js?v=20260908-seo1" defer></script>
+<SiteFooter />
+<script is:inline src="seo-analytics.js" defer></script><script is:inline src="seo-tracking.js" defer></script>
+<nav class="seo-mobile-contact" aria-label="Quick contact"><a href={`tel:${business.telephone}`}>Call Won Ads</a><a href={`https://wa.me/${business.telephone.slice(1)}`} target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="contact#quick-form">Enquire</a></nav>
+</Base>
+)}
+
+{kind === 'guide' && (
+<Base title={g.d.title} description={g.d.description} path={g.slug} preset="guide" nodes={g.nodes} bodyAttrs={{ class: 'seo-editorial' }}>
+<a class="skip-content" href="#main-content">Skip to content</a>
+<EditorialHeader />
+<main id="main-content">
+  <nav class="seo-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="resources">Guides</a> / <span>{g.d.heading}</span></nav>
+  <header class="seo-intro">
+    <p class="eyebrow">Won Ads · Business guide</p>
+    <h1>{g.d.heading}</h1>
+    <p class="seo-deck">{g.d.deck}</p>
+    <p class="seo-byline">By <a href="about">Won Ads</a> · <a href="editorial-standards">Content standards</a> · Updated <time datetime={g.d.updated}>{g.updatedText}</time></p>
+  </header>
+  <div class="seo-article"><Fragment set:html={g.article} /></div>
+  <aside class="cluster-next-step" aria-label="Related Won Ads services"><strong>{g.d.nextTitle}</strong><p>{g.d.nextLinks.map((l, i) => <>{i > 0 && ' '}<a href={l.href}>{l.text}</a></>)}</p></aside>
+</main>
+<script is:inline src="seo-tracking.js" defer></script>
+<SiteFooter />
+<nav class="seo-mobile-contact" aria-label="Quick contact"><a href={`tel:${business.telephone}`}>Call Won Ads</a><a href={`https://wa.me/${business.telephone.slice(1)}`} target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="contact#quick-form">Enquire</a></nav>
+</Base>
+)}
+
+{kind === 'page' && (
+<Base {...page.meta} faqHtml={pageHtml}><RawBody html={pageHtml} /></Base>
+)}

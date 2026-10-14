@@ -1,0 +1,89 @@
+{
+  "title": "Email & WhatsApp Marketing Services | Won Ads",
+  "description": "Email and WhatsApp marketing in Chandigarh: campaigns, newsletters and automated follow-ups for opted-in customers, with permissions and clear opt-outs.",
+  "path": "email-whatsapp",
+  "preset": "category",
+  "updated": "2026-09-28",
+  "bodyAttrs": {
+    "class": "category-shell",
+    "data-category": "email-whatsapp"
+  },
+  "nodes": [
+    {
+      "@type": "WebPage",
+      "@id": "https://wonads.com/email-whatsapp#webpage",
+      "url": "https://wonads.com/email-whatsapp",
+      "name": "Email &amp; WhatsApp Marketing Services | Won Ads",
+      "description": "Email and WhatsApp marketing in Chandigarh: campaigns, newsletters and automated follow-ups for opted-in customers, with permissions and clear opt-outs.",
+      "isPartOf": {
+        "@id": "https://wonads.com/#website"
+      },
+      "about": {
+        "@id": "https://wonads.com/#organization"
+      },
+      "inLanguage": "en-IN",
+      "breadcrumb": {
+        "@id": "https://wonads.com/email-whatsapp#breadcrumb"
+      },
+      "mainEntity": {
+        "@id": "https://wonads.com/email-whatsapp#service"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wonads.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://wonads.com/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Email & WhatsApp Marketing",
+          "item": "https://wonads.com/email-whatsapp"
+        }
+      ],
+      "@id": "https://wonads.com/email-whatsapp#breadcrumb"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://wonads.com/email-whatsapp#service",
+      "name": "Email & WhatsApp Marketing",
+      "description": "Email and WhatsApp marketing in Chandigarh: campaigns, newsletters and automated follow-ups for opted-in customers, with permissions and clear opt-outs.",
+      "url": "https://wonads.com/email-whatsapp",
+      "provider": {
+        "@id": "https://wonads.com/#organization"
+      },
+      "serviceType": "Email & WhatsApp Marketing",
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Chandigarh"
+        },
+        {
+          "@type": "City",
+          "name": "Mohali"
+        },
+        {
+          "@type": "City",
+          "name": "Panchkula"
+        },
+        {
+          "@type": "City",
+          "name": "Derabassi"
+        }
+      ],
+      "mainEntityOfPage": {
+        "@id": "https://wonads.com/email-whatsapp#webpage"
+      }
+    }
+  ]
+}

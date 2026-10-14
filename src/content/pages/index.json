@@ -1,0 +1,27 @@
+{
+  "title": "Digital Marketing Agency in Chandigarh | Won Ads",
+  "description": "Won Ads offers SEO, Google Ads, social media and website development for businesses in Chandigarh, Mohali, Panchkula and Derabassi. Discuss your goals.",
+  "path": "",
+  "preset": "index",
+  "updated": "2026-10-12",
+  "bodyAttrs": {},
+  "nodes": [
+    {
+      "@type": "WebPage",
+      "@id": "https://wonads.com/#webpage",
+      "url": "https://wonads.com/",
+      "name": "Digital Marketing Agency in Chandigarh | Won Ads",
+      "description": "Won Ads offers SEO, Google Ads, social media and website development for businesses in Chandigarh, Mohali, Panchkula and Derabassi. Discuss your goals.",
+      "isPartOf": {
+        "@id": "https://wonads.com/#website"
+      },
+      "about": {
+        "@id": "https://wonads.com/#organization"
+      },
+      "inLanguage": "en-IN",
+      "mainEntity": {
+        "@id": "https://wonads.com/#organization"
+      }
+    }
+  ]
+}

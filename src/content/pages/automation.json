@@ -1,0 +1,89 @@
+{
+  "title": "Marketing Automation & CRM Services | Won Ads",
+  "description": "Marketing automation and CRM setup in Chandigarh. Lead routing, follow-ups and reminders that cut repetitive work without losing the personal touch.",
+  "path": "automation",
+  "preset": "category",
+  "updated": "2026-09-28",
+  "bodyAttrs": {
+    "class": "category-shell",
+    "data-category": "automation"
+  },
+  "nodes": [
+    {
+      "@type": "WebPage",
+      "@id": "https://wonads.com/automation#webpage",
+      "url": "https://wonads.com/automation",
+      "name": "Marketing Automation &amp; CRM Services | Won Ads",
+      "description": "Marketing automation and CRM setup in Chandigarh. Lead routing, follow-ups and reminders that cut repetitive work without losing the personal touch.",
+      "isPartOf": {
+        "@id": "https://wonads.com/#website"
+      },
+      "about": {
+        "@id": "https://wonads.com/#organization"
+      },
+      "inLanguage": "en-IN",
+      "breadcrumb": {
+        "@id": "https://wonads.com/automation#breadcrumb"
+      },
+      "mainEntity": {
+        "@id": "https://wonads.com/automation#service"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wonads.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://wonads.com/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Marketing Automation & CRM",
+          "item": "https://wonads.com/automation"
+        }
+      ],
+      "@id": "https://wonads.com/automation#breadcrumb"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://wonads.com/automation#service",
+      "name": "Marketing Automation & CRM",
+      "description": "Marketing automation and CRM setup in Chandigarh. Lead routing, follow-ups and reminders that cut repetitive work without losing the personal touch.",
+      "url": "https://wonads.com/automation",
+      "provider": {
+        "@id": "https://wonads.com/#organization"
+      },
+      "serviceType": "Marketing Automation & CRM",
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Chandigarh"
+        },
+        {
+          "@type": "City",
+          "name": "Mohali"
+        },
+        {
+          "@type": "City",
+          "name": "Panchkula"
+        },
+        {
+          "@type": "City",
+          "name": "Derabassi"
+        }
+      ],
+      "mainEntityOfPage": {
+        "@id": "https://wonads.com/automation#webpage"
+      }
+    }
+  ]
+}

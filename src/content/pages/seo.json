@@ -1,0 +1,89 @@
+{
+  "title": "SEO Services in Chandigarh | Won Ads",
+  "description": "SEO services in Chandigarh: technical fixes, local SEO, Google Business Profile and service-page content tied to the enquiries your business wants.",
+  "path": "seo",
+  "preset": "category",
+  "updated": "2026-09-28",
+  "bodyAttrs": {
+    "class": "category-shell",
+    "data-category": "seo"
+  },
+  "nodes": [
+    {
+      "@type": "WebPage",
+      "@id": "https://wonads.com/seo#webpage",
+      "url": "https://wonads.com/seo",
+      "name": "SEO Services in Chandigarh | Won Ads",
+      "description": "SEO services in Chandigarh: technical fixes, local SEO, Google Business Profile and service-page content tied to the enquiries your business wants.",
+      "isPartOf": {
+        "@id": "https://wonads.com/#website"
+      },
+      "about": {
+        "@id": "https://wonads.com/#organization"
+      },
+      "inLanguage": "en-IN",
+      "breadcrumb": {
+        "@id": "https://wonads.com/seo#breadcrumb"
+      },
+      "mainEntity": {
+        "@id": "https://wonads.com/seo#service"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wonads.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://wonads.com/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SEO",
+          "item": "https://wonads.com/seo"
+        }
+      ],
+      "@id": "https://wonads.com/seo#breadcrumb"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://wonads.com/seo#service",
+      "name": "SEO",
+      "description": "SEO services in Chandigarh: technical fixes, local SEO, Google Business Profile and service-page content tied to the enquiries your business wants.",
+      "url": "https://wonads.com/seo",
+      "provider": {
+        "@id": "https://wonads.com/#organization"
+      },
+      "serviceType": "SEO",
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Chandigarh"
+        },
+        {
+          "@type": "City",
+          "name": "Mohali"
+        },
+        {
+          "@type": "City",
+          "name": "Panchkula"
+        },
+        {
+          "@type": "City",
+          "name": "Derabassi"
+        }
+      ],
+      "mainEntityOfPage": {
+        "@id": "https://wonads.com/seo#webpage"
+      }
+    }
+  ]
+}

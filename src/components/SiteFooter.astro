@@ -1,0 +1,67 @@
+---
+// Main website footer. `brand` shows the two-line logo used on the contact and services pages.
+const { brand = false } = Astro.props;
+---
+<footer class="won-footer" aria-label="Won Ads website footer">
+    <div class="won-footer__lead">
+      <div class="won-footer__lead__heading"><span>READY WHEN YOU ARE</span><h2>Bring the brief.<br><em>We’ll bring the win.</em></h2></div>
+      <a href="contact?type=vip#vip-form"><span>Start a serious project</span><b>↗</b></a>
+    </div>
+    <div class="won-footer__grid">
+      <section class="won-footer__brand" aria-label="About Won Ads">
+        {brand ? (
+          <a href="/" class="won-footer__logo" aria-label="Won Ads home"><span class="won-footer__mark"><img src="assets/brand/logo-192.png" alt="" width="48" height="48" decoding="async"></span><span class="brand-copy"><strong>Won Ads</strong><small>Ai Digital Marketing Agency</small></span></a>
+        ) : (
+          <a href="/" class="won-footer__logo"><span><img src="assets/brand/logo-192.png" alt="" width="48" height="48" decoding="async"></span><b>WON ADS</b></a>
+        )}
+        <p>Digital marketing agency in Chandigarh connecting <strong>search, advertising, websites and lead follow-up.</strong></p>
+        <small>CHANDIGARH · MOHALI · PANCHKULA · DERABASSI</small>
+        <address style="font-style:normal;font-size:13px;line-height:1.65;margin-top:14px">1495/1, Sector - 30B, Chandi Path, Sector 30, Chandigarh, 160030, India</address>
+        <a class="won-footer__email" href="mailto:wonads.com@gmail.com">wonads.com@gmail.com <b>↗</b></a>
+        <a href="tel:+919463806327">+91 94638 06327</a> · <a href="https://wa.me/919463806327" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      </section>
+      <nav class="won-footer__column" aria-label="Explore Won Ads">
+        <span>EXPLORE</span>
+        
+        <a href="about">About Won Ads <b>↗</b></a>
+        <a href="resources">Marketing guides <b>↗</b></a>
+        <a href="locations">Service areas <b>↗</b></a>
+        <a href="industries">Business needs <b>↗</b></a>
+        <a href="pricing">Pricing &amp; scope <b>↗</b></a>
+        <a href="services">All services <b>↗</b></a>
+        <a href="contact">Project enquiry <b>↗</b></a>
+      </nav>
+      <nav class="won-footer__column" aria-label="Growth services">
+        <span>GROWTH &amp; MEDIA</span>
+        <a href="paid-advertising">Paid Advertising <b>01</b></a>
+        <a href="social-media">Social Media <b>02</b></a>
+        <a href="seo">SEO <b>03</b></a>
+        <a href="websites">Websites &amp; Landing Pages <b>04</b></a>
+        <a href="creative">Content &amp; Creative <b>05</b></a>
+      </nav>
+      <nav class="won-footer__column" aria-label="Systems and brand services">
+        <span>SYSTEMS &amp; BRAND</span>
+        <a href="funnels">Lead Gen &amp; Funnels <b>06</b></a>
+        <a href="email-whatsapp">Email &amp; WhatsApp <b>07</b></a>
+        <a href="branding">Branding <b>08</b></a>
+        <a href="analytics">Analytics &amp; CRO <b>09</b></a>
+        <a href="automation">Automation &amp; CRM <b>10</b></a>
+      </nav>
+    </div>
+    <section class="won-footer__quick" aria-label="Popular individual services">
+      <span>QUICK SERVICE LINKS</span>
+      <div class="won-footer__quick__links">
+        <a href="service-paid-advertising-meta-ads-facebook-instagram">Meta Ads</a>
+        <a href="service-paid-advertising-google-search-ads">Google Search Ads</a>
+        <a href="service-seo-seo-audit">SEO Audit</a>
+        <a href="service-websites-landing-pages">Landing Pages</a>
+        <a href="service-creative-video-editing">Video Editing</a>
+        <a href="service-funnels-crm-setup">CRM Setup</a>
+      </div>
+    </section>
+    <div class="won-footer__note"><span></span><p>Prices shown across this website are starting estimates. Final scope, timelines, deliverables and media spend are confirmed in your project proposal.</p></div>
+    <div class="won-footer__bottom">
+      <p>© 2026 WON ADS · ALL RIGHTS RESERVED</p>
+      <p><a href="privacy-policy">Privacy</a> · <a href="terms">Terms</a> · <a href="editorial-standards">Content standards</a></p>
+      <a href="#">Back to top <b>↑</b></a>
+    </div></footer>

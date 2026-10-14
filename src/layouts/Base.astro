@@ -1,0 +1,64 @@
+---
+// Every page uses this layout. It writes the <head>: page-type styles, then the SEO tags
+// (description, canonical, social tags) and the schema (JSON-LD), all from the page's data.
+import { heads } from '../data/heads.mjs';
+import { SITE, sharedNodes } from '../data/site.mjs';
+
+const { title, description, path, preset, nodes = [], bodyAttrs = {}, faqHtml = '' } = Astro.props;
+const head = heads[preset];
+if (!head) throw new Error(`Unknown head preset "${preset}"`);
+
+const canonical = SITE + path;
+const escapeHtml = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+// FAQ schema is built from the page's FAQ list, so it always matches what visitors see.
+const text = s => s.replace(/<[^>]+>/g, ' ')
+  .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+  .replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/\s+/g, ' ').trim();
+const faqBlock = faqHtml.match(/class="(?:[^"]*\s)?faq-list(?:\s[^"]*)?"[\s\S]*?(?=<\/section>|<\/main>)/);
+const faqs = faqBlock
+  ? [...faqBlock[0].matchAll(/<details\b[^>]*>\s*<summary>([\s\S]*?)<\/summary>([\s\S]*?)<\/details>/g)]
+      .map(([, q, a]) => [text(q).replace(/^\d+\s*/, ''), text((a.match(/<p>([\s\S]*?)<\/p>/) || [, ''])[1])])
+      .filter(([q, a]) => q && a)
+  : [];
+
+const { before, after } = sharedNodes();
+const graph = [...before, ...nodes, ...after];
+if (faqs.length >= 2) {
+  graph.push({
+    '@type': 'FAQPage', '@id': canonical + '#faq', url: canonical,
+    mainEntity: faqs.map(([q, a], i) => ({
+      '@type': 'Question', '@id': `${canonical}#faq-${i + 1}`, name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+    isPartOf: { '@id': SITE + '#website' },
+  });
+}
+const ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/<\//g, '<\\/');
+const ogImage = SITE + 'assets/brand/logo-512.png';
+---
+<!doctype html>
+<html lang="en-IN">
+<head>
+<Fragment set:html={head.pre.replace('%TITLE%', escapeHtml(title))} />
+<meta name="description" content={description}>
+<link rel="canonical" href={canonical}>
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Won Ads">
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:url" content={canonical}>
+<meta property="og:image" content={ogImage}>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content={title}>
+<meta name="twitter:description" content={description}>
+<meta name="twitter:image" content={ogImage}>
+<link rel="stylesheet" href="seo-enhancements.css">
+<Fragment set:html={head.mid} />
+<script type="application/ld+json" is:inline set:html={ld}></script>
+<noscript><Fragment set:html="<style>.reveal,.service-animate{opacity:1!important;transform:none!important}</style>" /></noscript>
+<Fragment set:html={head.post} />
+</head>
+<body {...bodyAttrs}><slot /></body>
+</html>

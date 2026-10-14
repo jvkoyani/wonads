@@ -1,0 +1,10 @@
+---
+// Home page: src/content/pages/index.json + index.html
+import Base from '../layouts/Base.astro';
+import RawBody from '../components/RawBody.astro';
+import { getPages, syncPrices } from '../lib/content.mjs';
+
+const page = getPages().find(p => p.slug === 'index');
+const pageHtml = syncPrices(page.html, page.slug);
+---
+<Base {...page.meta} faqHtml={pageHtml}><RawBody html={pageHtml} /></Base>

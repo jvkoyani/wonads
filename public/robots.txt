@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /solar-system-source/
+Disallow: /wp-content/imunify-security/
+Sitemap: https://wonads.com/sitemap.xml

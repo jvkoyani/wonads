@@ -1,0 +1,111 @@
+{
+  "title": "Digital Marketing Guides for Business Owners | Won Ads",
+  "description": "Practical guides to choosing channels, improving inquiry quality and commissioning useful marketing work.",
+  "path": "resources",
+  "preset": "editorial",
+  "updated": "2026-09-28",
+  "bodyAttrs": {
+    "class": "seo-editorial"
+  },
+  "nodes": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://wonads.com/resources#webpage",
+      "url": "https://wonads.com/resources",
+      "name": "Digital Marketing Guides for Business Owners | Won Ads",
+      "description": "Practical guides to choosing channels, improving inquiry quality and commissioning useful marketing work.",
+      "isPartOf": {
+        "@id": "https://wonads.com/#website"
+      },
+      "about": {
+        "@id": "https://wonads.com/#organization"
+      },
+      "inLanguage": "en-IN",
+      "breadcrumb": {
+        "@id": "https://wonads.com/resources#breadcrumb"
+      },
+      "mainEntity": {
+        "@id": "https://wonads.com/resources#guides"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wonads.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Make a better marketing decision",
+          "item": "https://wonads.com/resources"
+        }
+      ],
+      "@id": "https://wonads.com/resources#breadcrumb"
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://wonads.com/resources#guides",
+      "name": "Won Ads marketing guides",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "url": "https://wonads.com/guide-seo-or-google-ads",
+          "name": "SEO or Google Ads: choose around business readiness"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "url": "https://wonads.com/guide-google-ads-lead-quality",
+          "name": "Diagnose poor leads before increasing the budget"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "url": "https://wonads.com/guide-website-traffic-no-leads",
+          "name": "Find out why visits are not becoming inquiries"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "url": "https://wonads.com/guide-qualified-lead-checklist",
+          "name": "Agree what a qualified lead means"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "url": "https://wonads.com/guide-website-project-brief",
+          "name": "Write a website brief that prevents scope surprises"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "url": "https://wonads.com/guide-google-versus-meta-ads",
+          "name": "Choose the channel around intent and the offer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "url": "https://wonads.com/guide-social-content-plan",
+          "name": "Build a content plan from real customer questions"
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "url": "https://wonads.com/guide-content-from-customer-questions",
+          "name": "Use your business knowledge to create content worth reading"
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "url": "https://wonads.com/guide-local-business-visibility",
+          "name": "Make local business information accurate and useful"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "title": "Website Terms & Service Information | Won Ads",
+  "description": "This website describes Won Ads services and starting estimates. A written project proposal or agreement confirms the terms of a commissioned engagement.",
+  "path": "terms",
+  "preset": "editorial",
+  "updated": "2026-09-28",
+  "bodyAttrs": {
+    "class": "seo-editorial"
+  },
+  "nodes": [
+    {
+      "@type": "WebPage",
+      "@id": "https://wonads.com/terms#webpage",
+      "url": "https://wonads.com/terms",
+      "name": "Website Terms & Service Information | Won Ads",
+      "description": "This website describes Won Ads services and starting estimates. A written project proposal or agreement confirms the terms of a commissioned engagement.",
+      "isPartOf": {
+        "@id": "https://wonads.com/#website"
+      },
+      "about": {
+        "@id": "https://wonads.com/#organization"
+      },
+      "inLanguage": "en-IN",
+      "breadcrumb": {
+        "@id": "https://wonads.com/terms#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wonads.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Website information and project agreements",
+          "item": "https://wonads.com/terms"
+        }
+      ],
+      "@id": "https://wonads.com/terms#breadcrumb"
+    }
+  ]
+}
